@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+	<meta charset="UTF-8">
+	<title>タスク一覧</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<h1>タスク一覧</h1>
+	
+	<div class="tasks_table">
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>タイトル</th>
+				<th>内容</th>
+				<th>登録者</th>
+				<th>開始日</th>
+				<th>終了日</th>
+				<th>作成日時</th>
+				<th>更新日時</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="task : ${tasks}">
+				<td th:text="${task.id}">15</td>
+				<td th:text="${task.title}">買い物リスト作成</td>
+				<td th:text="${task.content}">週末の買い物リストを作成</td>
+				<td th:text="${task.name}">田中　太郎</td>
+				<td th:text="${task.startDate}">2025-07-10</td>
+				<td th:text="${task.endDate}">2025-07-11</td>
+				<td th:text="${#dates.format(task.createdAt,
+					 'yyyy-MM-dd HH:mm')}"></td>
+				<td th:text="${#dates.format(task.updatedAt,
+					 'yyyy-MM-dd''T''HH:mm')}">2025-07-11T00:11</td>
+				<td>
+				<a href="#" class="btn-edit">編集</a>
+				<a href="#" class="btn-delete">削除</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	
+	<div class="pagination-area">
+	        <a href="#" class="page-link">前</a>
+	        <a href="#" class="page-link active">1</a>
+	        <a href="#" class="page-link">2</a>
+	        <a href="#" class="page-link">次 >></a>
+	    </div>
+
+	    <a href="#" class="btn btn-new">+ 新規作成</a>
+</body>
+
+</html>
