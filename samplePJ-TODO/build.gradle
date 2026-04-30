@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.14'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+// 環境（Java 25）に合わせて設定
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Webアプリの基本
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // 画面作成用 (Thymeleaf)
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // MyBatis (データベース操作)
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+    // PostgreSQL 接続用
+    runtimeOnly 'org.postgresql:postgresql'
+    
+    // 開発を便利にするツール (自動再起動など)
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    
+    // テスト用
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
