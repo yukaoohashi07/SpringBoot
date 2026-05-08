@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="sample.common.dao.mapper.LoginMapper">
-    <!-- ここは空でも大丈夫ですが、タグは閉じる必要があります -->
+    <select id="findByUsername" resultType="sample.common.dao.entity.Login">
+    SELECT * FROM login WHERE username = #{username}
+</select>
+
+<insert id="insert" parameterType="sample.common.dao.entity.Login">
+	INSERT INTO login (username, password, created_at, updated_at)
+	VALUES (#{username}, #{password}, NOW(), NOW())
+</insert>
+
 </mapper>

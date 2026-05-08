@@ -6,12 +6,12 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
-<body>
+<body class="top_body">
 	<div class="container">
 		<h1>TODOアプリ TOP</h1>
 		<div class="top_menu">
-			<a href="@{/register}" class="btn-register">ユーザ登録</a>
-			<a href="@{/login}" class="btn-login">ログイン</a>
+			<a th:href="@{/register}" class="btn-register">ユーザ登録</a>
+			<a th:href="@{/login}" class="btn-login">ログイン</a>
 		</div>
 	</div>
 </body>
