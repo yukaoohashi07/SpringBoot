@@ -11,7 +11,7 @@
         WHERE
         	username = #{username}
         ORDER BY
-            created_at DESC
+            id DESC;
     </select>
     
     <select id="findById" resultType="sample.common.dao.entity.Task">
@@ -44,5 +44,18 @@
             CURRENT_TIMESTAMP
         )
     </insert>
+    
+    <update id="update">
+    UPDATE tasks
+    SET
+        title = #{title},
+        content = #{content},
+        name = #{name},
+        start_date = #{startDate},
+        end_date = #{endDate},
+        updated_at = now()
+    WHERE
+        id = #{id}
+	</update>
  
 </mapper>

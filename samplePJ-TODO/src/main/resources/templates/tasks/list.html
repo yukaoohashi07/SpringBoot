@@ -39,7 +39,7 @@
 				<td th:text="${#dates.format(task.updatedAt,
 					 'yyyy-MM-dd''T''HH:mm')}">2025-07-11T00:11</td>
 				<td>
-				<a href="#" class="btn-edit">編集</a>
+				<a th:href="@{/tasks/edit/{id}(id=${task.id})}" class="btn-edit">編集</a>
 				<a href="#" class="btn-delete">削除</a>
 				</td>
 			</tr>
@@ -48,11 +48,11 @@
 	</div>
 	
 	<div class="pagination-area">
-	        <a href="#" class="page-link">前</a>
+	        <a href="#" class="page-link">« 前</a>
 	        <a href="#" class="page-link active">1</a>
 	        <a href="#" class="page-link">2</a>
-	        <a href="#" class="page-link">次 >></a>
-	    </div>
+	        <a href="#" class="page-link">次 »></a>
+	</div>
 </div>
 
 <div th:if="${tasks.isEmpty()}" class="taskisE">

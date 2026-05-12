@@ -11,4 +11,5 @@ public interface TaskMapper {
 	List<Task> findByUserId(String username);
 	void insert(Task task);
 	Task findById(Long id);
+	void update(Task task);
 }

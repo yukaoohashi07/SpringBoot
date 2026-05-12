@@ -110,19 +110,36 @@ tbody tr:nth-child(odd) {
 
 .pagination-area {
     margin-top: 30px;
-    text-align: center;
+    display: flex;
+	justify-content: center;
 }
 
 .page-link {
+	display: block;
     padding: 8px 12px;
     border: 1px solid #dee2e6;
     text-decoration: none;
     color: #007bff;
+	margin-left: -1px;
 }
 
 .page-link.active {
     background-color: #007bff;
     color: white;
+}
+
+.page-link:first-child {
+    margin-left: 0;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+	background-color: #dee2e6;
+	color: #777;
+	
+}
+
+.page-link:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .top_menu{
@@ -241,4 +258,66 @@ h1.register_h1{
 	border-radius: 8px;
 	color: #0c5362;
 	font-feature-settings: "palt";
+}
+
+
+.edit_body h1{
+	text-align: left;
+}
+
+.edit_body .container{
+	max-width: 800px;
+	margin: 0 auto;
+	display: block;
+}
+
+.edit_body .form-group {
+    margin-bottom: 20px;
+}
+
+.edit_body label{
+	margin-bottom: 10px;
+}
+
+.edit_body input, textarea{
+	display: block;
+	width: 100%;
+	border: 1px solid #e3e3e3;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+
+.button_group{
+	margin-top: 30px;
+	display: flex;
+	gap: 10px;
+}
+
+.btn-update {
+	text-align: center;
+    background-color: #0a6ffd;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-update:hover {
+    background-color: #085edb;
+}
+
+.btn-cancel {
+	text-align: center;
+    background-color: #6c757d;
+	color: white;
+	border: none;
+    padding: 6px 10px 8px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.btn-cancel:hover {
+    background-color: #555;
 }
