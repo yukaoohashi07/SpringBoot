@@ -3,21 +3,24 @@
 
 <mapper namespace="sample.common.dao.mapper.TaskMapper">
 
-    <select id="findAll" resultType="sample.common.dao.entity.Task">
+    <select id="findByUserId" resultType="sample.common.dao.entity.Task">
         SELECT
-            id,
-            username,
-            title,
-            content,
-            name,
-            start_date AS startDate,
-            end_date AS endDate,
-            created_at AS createdAt,
-            updated_at AS updatedAt
+   			*
         FROM
             tasks
+        WHERE
+        	username = #{username}
         ORDER BY
-            id DESC
+            created_at DESC
+    </select>
+    
+    <select id="findById" resultType="sample.common.dao.entity.Task">
+    	SELECT
+    		*
+    	FROM
+    		tasks
+    	WHERE
+    		id = #{id}
     </select>
 
     <insert id="insert">

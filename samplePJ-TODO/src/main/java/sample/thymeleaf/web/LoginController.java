@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
 import sample.common.dao.entity.Login;
 import sample.common.dao.mapper.LoginMapper;
 
@@ -28,5 +30,23 @@ public class LoginController{
 	public String register(Login login) {
 		loginMapper.insert(login);
 		return "redirect:/login";
-}
+	}
+	
+	@PostMapping("/login")
+	public String login(@RequestParam("username") String username, 
+						@RequestParam("password") String password,
+						HttpSession session) {
+		
+	    Login user = loginMapper.findByUsername(username);
+	    
+	    if (user != null && user.getPassword().equals(password)) {
+	    	
+	    	session.setAttribute("loginUser", user);
+	    	
+	        return "redirect:/tasks";
+	    } else {
+	        return "redirect:/login";
+	    }
+	}
+	
 }
