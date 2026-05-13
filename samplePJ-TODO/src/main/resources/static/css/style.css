@@ -79,9 +79,12 @@ tbody tr:nth-child(odd) {
 
 .btn-delete {
     background-color: #dc3545;
-	padding: 7px;
+	padding: 4px 8px;
 	border-radius: 5px;
 	color: #fff;
+	border: none;
+	font-size: 12px;
+	display: inline-block;
 }
 
 .btn-new {
@@ -313,11 +316,26 @@ h1.register_h1{
     background-color: #6c757d;
 	color: white;
 	border: none;
-    padding: 6px 10px 8px;
+    padding: 8px 10px 8px;
 	border-radius: 5px;
 	cursor: pointer;
+	font-size: 13px;
 }
 
 .btn-cancel:hover {
     background-color: #555;
+}
+
+.btn-add {
+	text-align: center;
+    background-color: #198755;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-add:hover {
+    background-color: #136b42;
 }

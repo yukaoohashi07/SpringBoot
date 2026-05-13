@@ -40,7 +40,9 @@
 					 'yyyy-MM-dd''T''HH:mm')}">2025-07-11T00:11</td>
 				<td>
 				<a th:href="@{/tasks/edit/{id}(id=${task.id})}" class="btn-edit">編集</a>
-				<a href="#" class="btn-delete">削除</a>
+				<form th:action="@{/tasks/delete/{id}(id=${task.id})}" method="post" style="display:inline;">
+				    <button type="submit" class="btn-delete" onclick="return confirm('本当に削除しますか？')">削除</button>
+				</form>
 				</td>
 			</tr>
 		</tbody>
@@ -59,7 +61,7 @@
 	<p>📮現在タスクは登録されていません。「新規作成」から追加してください。</p>
 </div>
 
-	    <a href="#" class="btn btn-new">+ 新規作成</a>
+	    <a th:href="@{/tasks/new}" class="btn btn-new">+ 新規作成</a>
 </body>
 
 </html>

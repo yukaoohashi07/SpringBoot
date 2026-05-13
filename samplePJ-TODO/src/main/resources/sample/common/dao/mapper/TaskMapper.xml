@@ -57,5 +57,9 @@
     WHERE
         id = #{id}
 	</update>
+	
+	<delete id="delete">
+		DELETE FROM tasks WHERE id = #{id}
+	</delete>
  
 </mapper>

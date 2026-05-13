@@ -54,4 +54,25 @@ public class TaskController {
 	    taskMapper.update(task);
 	    return "redirect:/tasks";
 	}
+	
+	@GetMapping("/new")
+	public String add(Model model) {
+		model.addAttribute("task", new Task());
+		return "tasks/form-new";
+	}
+	
+	@PostMapping("/create")
+	public String create(Task task, HttpSession session) {
+		Login user = (Login)session.getAttribute("loginUser");
+		task.setUsername(user.getUsername());
+		taskMapper.insert(task);
+		return "redirect:/tasks";
+	}
+	
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Long id) {
+		taskMapper.delete(id);
+		return "redirect:/tasks";
+	}
+	
 }
