@@ -31,6 +31,9 @@ dependencies {
     // 開発を便利にするツール (自動再起動など)
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     
+    // パスワードのハッシュ化（Spring SecurityのPasswordEncode拝借用）
+    implementation 'org.springframework.security:spring-security-crypto'
+    
     // テスト用
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
