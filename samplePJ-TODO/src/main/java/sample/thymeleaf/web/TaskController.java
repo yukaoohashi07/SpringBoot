@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpSession;
 import sample.common.dao.entity.Login;
 import sample.common.dao.entity.Task;
 import sample.common.dao.mapper.TaskMapper;
-import sample.common.exception.UnauthenticatedException;
 import sample.common.service.TaskService;
 
 @Controller
@@ -85,8 +84,6 @@ public class TaskController {
 	}
 	
 	private Login currentUser(HttpSession session) {
-	    Login u = (Login) session.getAttribute("loginUser");
-	    if (u == null) throw new UnauthenticatedException();
-	    return u;
+	    return (Login) session.getAttribute("loginUser");
 	}
 }
