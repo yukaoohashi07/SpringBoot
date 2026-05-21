@@ -2,9 +2,10 @@ package sample.thymeleaf.web;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,17 +15,23 @@ import jakarta.servlet.http.HttpSession;
 import sample.common.dao.entity.Login;
 import sample.common.dao.entity.Task;
 import sample.common.dao.mapper.TaskMapper;
+import sample.common.exception.UnauthenticatedException;
+import sample.common.service.TaskService;
 
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
 
-	@Autowired
-	private TaskMapper taskMapper;
+	private final TaskService taskService;
+	private final TaskMapper taskMapper;
+	
+	public TaskController(TaskService taskService, TaskMapper taskMapper) {
+	    this.taskService = taskService;
+	    this.taskMapper = taskMapper;
+	}
 	
 	@GetMapping
 	public String list(Model model, HttpSession session) {
-		
 		Login user = (Login) session.getAttribute("loginUser");
 		
 		if(user == null) {
@@ -40,18 +47,19 @@ public class TaskController {
 	}
 	
 	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, Model model) {
+	public String edit(@PathVariable Long id, HttpSession session, Model model) {
+		Login user = currentUser(session);
+		Task task = taskService.getOwnTask(id, user.getUsername());
 		
-		Task task = taskMapper.findById(id);
-		
-		model.addAttribute("task", task);
-		
+		model.addAttribute("task", task);	
 		return "tasks/form-edit";
 	}
 	
 	@PostMapping("/update")
-	public String update(Task task) {
-	    taskMapper.update(task);
+	public String update(@Validated TaskForm form, BindingResult br, HttpSession session) {
+		if (br.hasErrors()) return "tasks/form-edit";
+		Login user = currentUser(session);
+		taskService.updateOwn(form.toEntity(), user.getUsername());
 	    return "redirect:/tasks";
 	}
 	
@@ -70,9 +78,15 @@ public class TaskController {
 	}
 	
 	@PostMapping("/delete/{id}")
-	public String delete(@PathVariable("id") Long id) {
-		taskMapper.delete(id);
+	public String delete(@PathVariable Long id, HttpSession session) {
+		Login user = currentUser(session);
+	    taskService.deleteOwn(id, user.getUsername());
 		return "redirect:/tasks";
 	}
 	
+	private Login currentUser(HttpSession session) {
+	    Login u = (Login) session.getAttribute("loginUser");
+	    if (u == null) throw new UnauthenticatedException();
+	    return u;
+	}
 }
