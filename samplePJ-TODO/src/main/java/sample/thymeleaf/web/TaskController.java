@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpSession;
 import sample.common.dao.entity.Login;
 import sample.common.dao.entity.Task;
-import sample.common.dao.mapper.TaskMapper;
 import sample.common.service.TaskService;
 
 @Controller
@@ -22,24 +21,18 @@ import sample.common.service.TaskService;
 public class TaskController {
 
 	private final TaskService taskService;
-	private final TaskMapper taskMapper;
 	
-	public TaskController(TaskService taskService, TaskMapper taskMapper) {
+	public TaskController(TaskService taskService) {
 	    this.taskService = taskService;
-	    this.taskMapper = taskMapper;
 	}
 	
 	@GetMapping
 	public String list(Model model, HttpSession session) {
-		Login user = (Login) session.getAttribute("loginUser");
-		
-		if(user == null) {
-			return "redirect:/login";
-		}
+		Login user = currentUser(session);
 		
 		System.out.println("ログイン中のユーザーID: " + user.getId());
 		
-		List<Task> tasks = taskMapper.findByUserId(user.getUsername());
+		List<Task> tasks = taskService.listOwn(user.getUsername(), 0, 30);
 		model.addAttribute("tasks" , tasks);
 		
 		return "tasks/list";
@@ -58,7 +51,7 @@ public class TaskController {
 	public String update(@Validated TaskForm form, BindingResult br, HttpSession session) {
 		if (br.hasErrors()) return "tasks/form-edit";
 		Login user = currentUser(session);
-		taskService.updateOwn(form.toEntity(), user.getUsername());
+		taskService.updateOwn(form, user.getUsername());
 	    return "redirect:/tasks";
 	}
 	
@@ -69,10 +62,9 @@ public class TaskController {
 	}
 	
 	@PostMapping("/create")
-	public String create(Task task, HttpSession session) {
-		Login user = (Login)session.getAttribute("loginUser");
-		task.setUsername(user.getUsername());
-		taskMapper.insert(task);
+	public String create(TaskForm form, HttpSession session) {
+		Login user = currentUser(session);
+		taskService.createOwn(form, user.getUsername());
 		return "redirect:/tasks";
 	}
 	
