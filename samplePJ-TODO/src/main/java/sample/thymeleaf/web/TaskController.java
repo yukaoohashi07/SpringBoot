@@ -69,7 +69,7 @@ public class TaskController {
 	}
 	
 	@PostMapping("/delete/{id}")
-	public String delete(@PathVariable Long id, HttpSession session) {
+	public String delete(@PathVariable("id") Long id, HttpSession session) {
 		Login user = currentUser(session);
 	    taskService.deleteOwn(id, user.getUsername());
 		return "redirect:/tasks";
