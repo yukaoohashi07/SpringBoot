@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import sample.common.dao.entity.Login;
 import sample.common.dao.entity.Task;
 import sample.common.service.TaskService;
+import sample.thymeleaf.web.TaskForm;
 
 @Controller
 @RequestMapping("/tasks")
@@ -43,28 +44,41 @@ public class TaskController {
 		Login user = currentUser(session);
 		Task task = taskService.getOwnTask(id, user.getUsername());
 		
-		model.addAttribute("task", task);	
+		TaskForm form = new TaskForm();
+		form.setId(task.getId());
+		form.setTitle(task.getTitle());
+		form.setContent(task.getContent());
+		form.setName(task.getName());
+		form.setStartDate(task.getStartDate());
+		form.setEndDate(task.getEndDate());
+		
+		model.addAttribute("taskForm", form);
 		return "tasks/form-edit";
 	}
 	
 	@PostMapping("/update")
 	public String update(@Validated TaskForm form, BindingResult br, HttpSession session) {
-		if (br.hasErrors()) return "tasks/form-edit";
+		if (br.hasErrors()) {
+			return "tasks/form-edit";
+		}
 		Login user = currentUser(session);
-		taskService.updateOwn(form, user.getUsername());
+		taskService.updateOwn(form.toEntity(), user.getUsername());
 	    return "redirect:/tasks";
 	}
 	
 	@GetMapping("/new")
 	public String add(Model model) {
-		model.addAttribute("task", new Task());
+		model.addAttribute("taskForm", new TaskForm());
 		return "tasks/form-new";
 	}
 	
 	@PostMapping("/create")
-	public String create(TaskForm form, HttpSession session) {
+	public String create(@Validated TaskForm form, BindingResult br, HttpSession session) {
+		if (br.hasErrors()) {
+			return "tasks/form-new";
+		}
 		Login user = currentUser(session);
-		taskService.createOwn(form, user.getUsername());
+		taskService.createOwn(form.toEntity(), user.getUsername());
 		return "redirect:/tasks";
 	}
 	

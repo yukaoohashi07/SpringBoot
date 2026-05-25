@@ -9,7 +9,7 @@ public interface TaskService {
     int countOwn(String username);
     
     Task getOwnTask(Long id, String username);
-    void createOwn(TaskForm form, String username);
-    void updateOwn(TaskForm form, String username);
+    void createOwn(Task task, String username);
+    void updateOwn(Task task, String username);
     void deleteOwn(Long id, String username);
 }
