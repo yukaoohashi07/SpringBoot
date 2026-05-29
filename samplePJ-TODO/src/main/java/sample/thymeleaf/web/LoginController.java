@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import jakarta.servlet.http.HttpSession;
 import sample.common.service.LoginService;
+import org.springframework.ui.Model;
 
 @Controller
 public class LoginController{
@@ -26,13 +28,16 @@ public class LoginController{
 	}
 	
 	@GetMapping("/register")
-	public String showRegisterPage() {
+	public String showRegisterPage(Model model) {
+		model.addAttribute("registerForm", new RegisterForm());
 		return "register";
 	}
 	
 	@PostMapping("/register")
-	public String register(@Validated RegisterForm form, BindingResult br) {
-        if (br.hasErrors()) return "register";
+	public String register(@Validated @ModelAttribute("registerForm") RegisterForm form, BindingResult br) {
+        if (br.hasErrors()) {
+        	return "register";
+        }
 
         loginService.register(form.getUsername(), form.getPassword());
         return "redirect:/login";
