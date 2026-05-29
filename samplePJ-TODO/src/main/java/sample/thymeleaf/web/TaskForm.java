@@ -2,12 +2,21 @@ package sample.thymeleaf.web;
 
 import java.sql.Date;
 import sample.common.dao.entity.Task;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class TaskForm {
 
     private Long id;
+    
+    @NotBlank(message = "タイトルを入力してください")
+    @Size(max = 100, message = "タイトルは100文字以内で入力してください")
     private String title;
+    
+    @Size(max = 1000, message = "内容は1000文字以内で入力してください")
     private String content;
+    
+    @Size(max = 50, message = "登録者は50文字以内で入力してください")
     private String name;
     private Date startDate;
     private Date endDate;

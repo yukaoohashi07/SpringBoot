@@ -9,7 +9,6 @@ import sample.common.dao.mapper.TaskMapper;
 import sample.common.exception.ForbiddenException;
 import sample.common.exception.TaskNotFoundException;
 import sample.common.service.TaskService;
-import sample.thymeleaf.web.TaskForm;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -45,22 +44,16 @@ public class TaskServiceImpl implements TaskService {
     
     @Transactional
     @Override
-    public void createOwn(TaskForm form, String username) {
-    	Task task = form.toEntity();
+    public void createOwn(Task task, String username) {
         task.setUsername(username);
         taskMapper.insert(task);
     }
     
     @Transactional
     @Override
-    public void updateOwn(TaskForm form, String username) {
-        Task current = getOwnTask(form.getId(), username);
-        current.setTitle(form.getTitle());
-        current.setContent(form.getContent());
-        current.setName(form.getName());
-        current.setStartDate(form.getStartDate());
-        current.setEndDate(form.getEndDate());
-        taskMapper.update(current);
+    public void updateOwn(Task task, String username) {
+        getOwnTask(task.getId(), username);
+        taskMapper.update(task);
     }
     
     @Transactional

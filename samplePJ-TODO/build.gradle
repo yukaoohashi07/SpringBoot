@@ -40,6 +40,9 @@ dependencies {
     
     // Spring Security（CSRF対策）
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    
+    // 入力チェック（バリデーション）
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {

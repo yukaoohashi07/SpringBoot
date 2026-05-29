@@ -2,7 +2,6 @@ package sample.common.service;
 
 import java.util.List;
 import sample.common.dao.entity.Task;
-import sample.thymeleaf.web.TaskForm;
 
 public interface TaskService {
 	List<Task> listOwn(String username, int page, int size);
